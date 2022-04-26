@@ -1,16 +1,29 @@
 body {
-    background-color: #FEFAEF!important;
+    background-color: #FEFAEF !important;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-nav {
-    position: absolute!important;
+.active-theme {
+    border-left: 4px solid white !important;
+}
+
+#progress-container {
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
-    top: 0;
+    width: 100%;
+    height: 20px;
+    background-color: #ADAEAD;
+}
+
+.progress-content {
+    background-color: #27345C;
+    height: 100%;
+    border-radius: 0 10px 10px 0;
 }
 
 .quiz-card-container {
@@ -18,15 +31,45 @@ nav {
     justify-content: center;
     background-color: #F7F7F7;
     border-radius: 10px;
+    min-height: 432px;
+    box-shadow: 0px 0px 11px 3px rgba(87,87,87,0.33);
+    max-width: 660px;
 }
 
 .leftframe {
-    background-image: url('../img/pencil-g865268ca5_640.jpg');
+    /* background-image: url('../img/pencil-g865268ca5_640.jpg');
+    background-size: cover; */
+    background-color: #27345C;
     width: 10rem;
     border-radius: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.card-content {
+.themes-container {
+    margin-top: 1.5rem;
+    font-weight: bold;
+    color: white;
+    width: 100%;
+    
+}
+
+.themes-container div {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    width: 100%;
+    padding-left: 26px;
+    border-left: 4px solid #27345C;
+}
+
+.leftframe img {
+    height: auto;
+    width: 98px;
+    margin-top: 1rem;
+}
+
+#card-content {
     width: 500px;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -35,7 +78,16 @@ nav {
 .card {
     margin-left: 2rem;
     margin-right: 2rem;
-    flex-direction: row!important;
+    flex-direction: row !important;
+}
+
+.answer {
+    cursor: pointer;
+}
+
+.answer:hover {
+    background-color: #F5F5F5;
+    transition: 0.25s;
 }
 
 .answer-classificator {
@@ -53,15 +105,100 @@ nav {
 
 .card-title {
     text-align: center;
-    margin-bottom: 1.5rem!important;
+    margin-bottom: 1.5rem !important;
     margin-top: 0.5rem;
     font-weight: bold;
 }
 
-.quiz-card-footer {
+#quiz-card-footer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     padding: 0 2rem;
     margin-top: 1rem;
+}
+
+.right-answer {
+    background-color: #B7F699 !important;
+}
+
+.false-answer {
+    background-color: #FFA3A4 !important;
+    transition: 0.5s;
+}
+
+.congratulation-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.congratulation-screen img {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    height: 100px;
+}
+
+.congratulation-screen button {
+    margin-top: 3rem;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+}
+
+#trophy-icon {
+    position: absolute;
+    right: -100px;
+    height: 200px;
+    transition: 1s;
+}
+
+.trophy-animation {
+    right: 0!important;
+    transition: 1s;
+}
+
+#welcome-card-content {
+    display: flex;
+    max-width: 500px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-image: url('../img/brainbg.jpg');
+    background-position: center;
+    background-size: contain;
+    font-size: 1.4rem;
+    text-align: center;
+    border-radius: 0 10px 10px 0;
+}
+
+.top-wrap {
+    padding: 0 2rem;
+}
+
+.bottom-wrap {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.bottom-wrap button {
+    background-color: #FF4E0F;
+    color: white;
+    border: none;
+    margin-right: 2rem;
+}
+
+.bottom-wrap button:hover {
+    background-color: #E2450D;
+    transition: 0.25s;
+}
+
+.welcome-card-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-top: 8rem;
 }

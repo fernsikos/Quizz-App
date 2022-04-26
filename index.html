@@ -16,45 +16,71 @@
 
 </head>
 
-<body>
+<body onload="init()">
+    <div id="progress-container">
+        <div class="progress-content" style="width: 1%"></div>
+    </div>
 
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Quiz-App</span>
+    <div class="quiz-card-container" id="start-screen">
+        <div class="leftframe">
+            <img src="img/logo.png" alt="">
+            <div class="themes-container">
+                <div>HTML</div>
+                <div>CSS</div>
+                <div>JavaScript</div>
+            </div>
         </div>
-    </nav>
-    <div class="quiz-card-container">
+        <div id="welcome-card-content">
+            <div class="top-wrap">
+                <h5 class="welcome-card-title">Willkommen zum ultimativen Webdesign Quiz</h5>
+                <span>Bist du bereit?</span>
+            </div>
+            <div class="bottom-wrap">
+                <button type="button" class="btn btn-primary" onclick="startGame()">Los Geht´s</button>
+                
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="quiz-card-container d-none" id="end-screen">
         <div class="leftframe"></div>
-        <div class="card-content">
-            <h5 class="card-title">Frage</h5>
-            <div class="card mb-2">
-                <div class="answer-classificator">A</div>
-                <div class="card-body">
-                    Antwort
+        <div id="card-content" class="congratulation-screen">
+            <img src="img/brain result.png" alt="">
+            <h5 class="card-title">Herzlichen Glückwunsch</h5>
+            <span>Du Hast alle Fragen richtig beantworten können.</span>
+            <span class="points">Deine Punktzahl: <b id="points-end-screen">0</b> von <b
+                    id="total-points-end-screen">560</b> Punkten</span>
+            <button type="button" class="btn btn-primary btn-sm" onclick="replay()">Quiz nochmal spielen</button>
+        </div>
+    </div>
+    <img src="img/tropy.png" alt="" id="trophy-icon">
+
+    <div class="quiz-card-container d-none" id="quiz-screen">
+        <div class="leftframe">
+            <img src="img/logo.png" alt="">
+            <div class="themes-container">
+                <div id="html">HTML</div>
+                <div id="css">CSS</div>
+                <div id="js">JavaScript</div>
+            </div>
+        </div>
+        <div id="card-content">
+            <h5 class="card-title" id="card-title">Frage</h5>
+            <div id="answers-container"></div>
+            <div id="quiz-card-footer">
+                <div class="footer-left">
+                    <span><b id="current-question">1</b> von <b id="all-questions">5</b> Fragen</span>
+                    <span class="points"><b id="points">0</b> von <b id="total-points">560</b> Punkten</span>
                 </div>
-            </div>
-            <div class="card mb-2">
-                <div class="answer-classificator">B</div>
-                <div class="card-body">
-                    Antwort
+                <div class="footer-right">
+                    <button id="next-question-Btn" disabled type="button" class="btn btn-primary btn-sm"
+                        onclick="nextQuestion()">Nächste Frage</button>
                 </div>
+
             </div>
-            <div class="card mb-2">
-                <div class="answer-classificator">C</div>
-                <div class="card-body">
-                    Antwort
-                </div>
-            </div>
-            <div class="card mb-2">
-                <div class="answer-classificator">D</div>
-                <div class="card-body">
-                    Antwort
-                </div>
-            </div>
-            <div class="quiz-card-footer">
-                <span><b>1</b> von <b>5</b> Fragen</span>
-                <button type="button" class="btn btn-primary btn-sm">Nächste Frage</button>
-            </div>
+
         </div>
     </div>
 
