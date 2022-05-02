@@ -67,8 +67,8 @@ let questions = [
 let currentQuestion = 0;
 let points = 0;
 let rightAnswered = false;
-let success = new Audio('../sound/success.mov');
-let wrong = new Audio('../sound/wrong.mp3');
+let success = new Audio('sound/success.mov');
+let wrong = new Audio('sound/wrong.mov');
 
 function init() {
     loadNumberOfQuestions();
