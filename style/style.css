@@ -32,13 +32,11 @@ body {
     background-color: #F7F7F7;
     border-radius: 10px;
     min-height: 432px;
-    box-shadow: 0px 0px 11px 3px rgba(87,87,87,0.33);
+    box-shadow: 0px 0px 11px 3px rgba(87, 87, 87, 0.33);
     max-width: 660px;
 }
 
 .leftframe {
-    /* background-image: url('../img/pencil-g865268ca5_640.jpg');
-    background-size: cover; */
     background-color: #27345C;
     width: 10rem;
     border-radius: 10px 0 0 10px;
@@ -52,7 +50,7 @@ body {
     font-weight: bold;
     color: white;
     width: 100%;
-    
+
 }
 
 .themes-container div {
@@ -149,14 +147,14 @@ body {
 }
 
 #trophy-icon {
-    position: absolute;
+    position: fixed;
     right: -100px;
     height: 200px;
     transition: 1s;
 }
 
 .trophy-animation {
-    right: 0!important;
+    right: 0 !important;
     transition: 1s;
 }
 
@@ -201,4 +199,88 @@ body {
     font-weight: bold;
     font-size: 1.5rem;
     margin-top: 8rem;
+}
+
+@media (max-width:690px) {
+    .quiz-card-container {
+        flex-direction: column;
+    }
+
+    #welcome-card-content {
+        border-radius: 0 0 10px 10px;
+        min-height: 300px;
+    }
+
+    .leftframe {
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .themes-container {
+        display: flex;
+        text-align: center;
+    }
+
+    .themes-container div {
+        padding: 0;
+        border-left: 0;
+        border-bottom: 4px solid #27345C;
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .welcome-card-title {
+        margin-top: 4rem;
+    }
+
+    .active-theme {
+        border-left: none !important;
+        border-bottom: 4px solid white !important;
+    }
+}
+
+@media (max-width: 550px) {
+    .quiz-card-container {
+        width: 300px;
+    }
+
+    .themes-container div {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .themes-container {
+        width: unset;
+    }
+
+    #card-content {
+        width: unset;
+    }
+
+    #quiz-card-footer {
+        flex-direction: column;
+        align-items: baseline;
+    }
+
+    .footer-right {
+        margin-top: 1rem;
+    }
+
+    .footer-left {
+        margin-top: 1rem;
+    }
+
+    .congratulation-screen {
+        padding: 2rem;
+    }
+
+    #trophy-icon {
+        height: 120px;
+        top: 221px;
+    }
+
+    .card {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
 }
