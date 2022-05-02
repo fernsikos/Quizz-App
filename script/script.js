@@ -81,32 +81,37 @@ function startGame() {
     document.getElementById('quiz-screen').classList.remove('d-none');
 }
 
-function loadPoints() {
-    document.getElementById('points').innerHTML = points;
-    document.getElementById('points-end-screen').innerHTML = points;
-    loadTotalPoints();
+function loadActive(theme) {
+    document.getElementById('html').classList.remove('active-theme');
+    document.getElementById('css').classList.remove('active-theme');
+    document.getElementById('js').classList.remove('active-theme');
+    document.getElementById(theme).classList.add('active-theme');
 }
 
-function progressBar() {
+function updateProgressBar() {
     let progressPerQuestion = 100 / questions.length;
     let progress = progressPerQuestion * currentQuestion + 1;
-    document.getElementById('progress-container').innerHTML = /*html*/ `<div class="progress-content" style="width: ${progress}%"></div>`
+    document.getElementById('progress-container').innerHTML = createProgressHTML(progress)
 }
 
-function loadTotalPoints() {
-    let totalPoints = questions.length * 80;
-    document.getElementById('total-points').innerHTML = totalPoints;
-    document.getElementById('total-points-end-screen').innerHTML = totalPoints;
+function loadCurrentQuestion() {
+    let question = questions[currentQuestion];
+    let theme = question['theme'];
+    createCardTitle(question);
+    loadActive(theme);
+    emptyOldAnswers();
+    loadAnswers(question);
 }
 
-function replay() {
-    document.getElementById('end-screen').classList.toggle('d-none');
-    document.getElementById('quiz-screen').classList.toggle('d-none');
-    document.getElementById('trophy-icon').classList.toggle('trophy-animation');
-    currentQuestion = 0;
-    points = 0;
-    progressBar();
-    init();
+function loadAnswers(question) {
+    let charsetNumber = 65;
+    for (i = 0; i < 4; i++) {
+        let charsetLetter = String.fromCharCode(charsetNumber);
+        let currentAnswer = i + 1;
+        let currentAnswerString = 'answer_' + currentAnswer;
+        document.getElementById('answers-container').innerHTML += createAnswerHTML(currentAnswerString, charsetLetter, question)
+        charsetNumber++;
+    }
 }
 
 function loadNumberOfQuestions() {
@@ -115,17 +120,49 @@ function loadNumberOfQuestions() {
     document.getElementById('current-question').innerHTML = currentQuestion + 1;
 }
 
+function loadPoints() {
+    document.getElementById('points').innerHTML = points;
+    document.getElementById('points-end-screen').innerHTML = points;
+    loadTotalPoints();
+}
+
+function loadTotalPoints() {
+    let totalPoints = questions.length * 80;
+    document.getElementById('total-points').innerHTML = totalPoints;
+    document.getElementById('total-points-end-screen').innerHTML = totalPoints;
+}
+
+function checkAnswer(currentAnswer) {
+    let rightAnswer = 'answer_' + questions[currentQuestion]['right_answer'];
+    if (answerIsRight(rightAnswer, currentAnswer)) {
+        createRightAnswerderTheme(currentAnswer);
+        enableNextBtn();
+        if (notYetAnsweredRight()) {
+            addFullPoints();
+        }
+        success.play();
+        loadPoints();
+    } else {
+        createFalseAnswerTheme(currentAnswer);
+        addPenalty();
+        wrong.play();
+        loadPoints();
+        setTimeout(function () {
+            resetFalseAnswerTheme(currentAnswer);
+        }, 2000);
+    }
+}
+
 function nextQuestion() {
     let totalQuestions = questions.length
-    if (totalQuestions > currentQuestion + 1) {
-        currentQuestion++;
-        progressBar();
-        document.getElementById('next-question-Btn').disabled = true;
-        rightAnswered = false;
+    if (notAnsweredAllQuestions(totalQuestions)) {
+        addOneToCurrentQuestion();
+        updateProgressBar();
+        disableNextBtn();
+        resetRightAnswered();
         init();
     } else {
-        currentQuestion++;
-        progressBar();
+        updateProgressBar();
         loadEndScreen();
     }
 }
@@ -136,58 +173,86 @@ function loadEndScreen() {
     document.getElementById('trophy-icon').classList.toggle('trophy-animation');
 }
 
-function loadCurrentQuestion() {
-    let question = questions[currentQuestion];
-    document.getElementById('card-title').innerHTML = question['question'];
-    let theme = question['theme'];
-    loadActive(theme);
-    let charsetNumber = 65;
+function replay() {
+    document.getElementById('end-screen').classList.toggle('d-none');
+    document.getElementById('quiz-screen').classList.toggle('d-none');
+    document.getElementById('trophy-icon').classList.toggle('trophy-animation');
+    currentQuestion = 0;
+    points = 0;
+    updateProgressBar();
+    init();
+}
+
+// Small Functions
+
+function addPenalty() {
+    points = points - 20
+}
+
+function addFullPoints() {
+    points = points + 80;
+    rightAnswered = true;
+}
+
+function notYetAnsweredRight() {
+    return rightAnswered === false
+}
+
+function createRightAnswerderTheme(currentAnswer) {
+    document.getElementById(currentAnswer).classList.add("right-answer")
+}
+
+function answerIsRight(rightAnswer, currentAnswer) {
+    return rightAnswer === currentAnswer
+}
+
+function emptyOldAnswers() {
     document.getElementById('answers-container').innerHTML = '';
-    for (i = 0; i < 4; i++) {
-        let charsetLetter = String.fromCharCode(charsetNumber);
-        let currentAnswer = i + 1;
-        let currentAnswerString = 'answer_' + currentAnswer;
-        document.getElementById('answers-container').innerHTML += createAnswerHTML(currentAnswerString, charsetLetter, question)
-        charsetNumber++;
-    }
 }
 
-function loadActive(theme) {
-    document.getElementById('html').classList.remove('active-theme');
-    document.getElementById('css').classList.remove('active-theme');
-    document.getElementById('js').classList.remove('active-theme');
-    document.getElementById(theme).classList.add('active-theme');
+function createCardTitle(question) {
+    document.getElementById('card-title').innerHTML = question['question'];
 }
 
-function answer(currentAnswer) {
-    let rightAnswer = 'answer_' + questions[currentQuestion]['right_answer'];
-    if (rightAnswer === currentAnswer) {
-        document.getElementById(currentAnswer).classList.add("right-answer")
-        document.getElementById('next-question-Btn').disabled = false;
-        if (rightAnswered === false) {
-            points = points + 80;
-            rightAnswered = true;
-        }
-        success.play();
-        loadPoints();
-    } else {
-        document.getElementById(currentAnswer).classList.add("false-answer")
-        points = points - 20
-        wrong.play();
-        loadPoints();
-        setTimeout(function () {
-            document.getElementById(currentAnswer).classList.remove("false-answer")
-        }, 2000);
-    }
+function createFalseAnswerTheme(currentAnswer) {
+    document.getElementById(currentAnswer).classList.add("false-answer")
+}
+
+function resetFalseAnswerTheme(currentAnswer) {
+    document.getElementById(currentAnswer).classList.remove("false-answer")
+}
+
+function resetRightAnswered() {
+    rightAnswered = false;
+}
+
+function addOneToCurrentQuestion() {
+    currentQuestion++;
+}
+
+function disableNextBtn() {
+    document.getElementById('next-question-Btn').disabled = true;
+}
+
+function enableNextBtn() {
+    document.getElementById('next-question-Btn').disabled = false;
+}
+
+function notAnsweredAllQuestions(totalQuestions) {
+    return totalQuestions > currentQuestion + 1
 }
 
 // Templates
 
 function createAnswerHTML(currentAnswerString, charsetLetter, question) {
-    return /*html*/ `<div class="card answer mb-2" id="${currentAnswerString}" onclick="answer('${currentAnswerString}')">
+    return /*html*/ `<div class="card answer mb-2" id="${currentAnswerString}" onclick="checkAnswer('${currentAnswerString}')">
     <div class="answer-classificator">${charsetLetter}</div>
     <div class="card-body">
         ${question[currentAnswerString]}
     </div>
 </div>`
+}
+
+function createProgressHTML(progress) {
+    return  /*html*/ `<div class="progress-content" style="width: ${progress}%"></div>`
 }
